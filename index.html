@@ -57,7 +57,7 @@
         </div>
       </nav>
       <button class="menu-toggle" data-menu-toggle aria-expanded="false" aria-controls="menu" aria-label="Abrir menu">
-        <span></span><span></span>
+        <span></span><span></span><span></span>
       </button>
     </div>
   </header>
@@ -104,7 +104,7 @@
           </ul>
         </div>
         <div class="about-media reveal">
-          <div class="about-track" data-carousel tabindex="0" role="region" aria-roledescription="carrossel" aria-label="Fotos do condomínio. Deslize para ver mais.">
+          <div class="about-track carousel-track" data-carousel tabindex="0" role="region" aria-roledescription="carrossel" aria-label="Fotos do condomínio. Deslize para ver mais.">
             <div class="slide slide-main">
               <div class="photo" style="--img:url('assets/img/area-externa.jpg')" role="img" aria-label="Área externa com piscina e churrasqueira"></div>
               <div class="badge-float"><strong>5 min</strong><span>a pé até a praia</span></div>
@@ -134,43 +134,55 @@
         </div>
         <div class="house-grid">
           <article class="house-card reveal">
-            <button type="button" class="house-photo-btn" data-gallery="casa-2" aria-label="Ver as 28 fotos da Casa 2">
-              <img class="house-photo" src="assets/img/casa-2/thumb/02.jpg" alt="Sala da Casa 2 com vista para a piscina" loading="lazy" width="640" height="480">
-              <span class="photo-count"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m21 16-5-5-8 8"/></svg>28 fotos</span>
-            </button>
+            <div class="house-media">
+              <div class="house-track carousel-track" data-carousel data-house-slides="casa-2" data-cover="02.jpg" tabindex="0" role="region" aria-roledescription="carrossel" aria-label="Fotos da Casa 2. Deslize para ver mais.">
+                <img class="house-photo" src="assets/img/casa-2/thumb/02.jpg" alt="Casa 2: foto 1 de 28" width="640" height="480" draggable="false">
+              </div>
+              <button type="button" class="car-btn car-prev" data-carousel-prev aria-label="Foto anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+              <button type="button" class="car-btn car-next" data-carousel-next aria-label="Próxima foto"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+              <span class="photo-count" data-carousel-count aria-live="polite">1 / 28</span>
+            </div>
             <div class="house-body">
               <div class="house-top"><h3>Casa 2</h3><span class="tag">até 12 pessoas</span></div>
               <ul class="house-specs"><li>4 suítes</li><li>Piscina privativa</li><li>3 vagas</li></ul>
               <div class="house-actions">
-                <button type="button" class="house-link" data-gallery="casa-2">Ver fotos</button>
+                <button type="button" class="house-link" data-gallery="casa-2">Tela cheia</button>
                 <a href="#reservar" class="house-link house-link-strong" data-house="Casa 2">Consultar datas <span aria-hidden="true">→</span></a>
               </div>
             </div>
           </article>
           <article class="house-card reveal">
-            <button type="button" class="house-photo-btn" data-gallery="casa-3" aria-label="Ver as 29 fotos da Casa 3">
-              <img class="house-photo" src="assets/img/casa-3/thumb/01.jpg" alt="Sala da Casa 3 com vista para a piscina" loading="lazy" width="640" height="480">
-              <span class="photo-count"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m21 16-5-5-8 8"/></svg>29 fotos</span>
-            </button>
+            <div class="house-media">
+              <div class="house-track carousel-track" data-carousel data-house-slides="casa-3" data-cover="01.jpg" tabindex="0" role="region" aria-roledescription="carrossel" aria-label="Fotos da Casa 3. Deslize para ver mais.">
+                <img class="house-photo" src="assets/img/casa-3/thumb/01.jpg" alt="Casa 3: foto 1 de 29" width="640" height="480" draggable="false">
+              </div>
+              <button type="button" class="car-btn car-prev" data-carousel-prev aria-label="Foto anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+              <button type="button" class="car-btn car-next" data-carousel-next aria-label="Próxima foto"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+              <span class="photo-count" data-carousel-count aria-live="polite">1 / 29</span>
+            </div>
             <div class="house-body">
               <div class="house-top"><h3>Casa 3</h3><span class="tag">até 12 pessoas</span></div>
               <ul class="house-specs"><li>4 suítes</li><li>Piscina privativa</li><li>3 vagas</li></ul>
               <div class="house-actions">
-                <button type="button" class="house-link" data-gallery="casa-3">Ver fotos</button>
+                <button type="button" class="house-link" data-gallery="casa-3">Tela cheia</button>
                 <a href="#reservar" class="house-link house-link-strong" data-house="Casa 3">Consultar datas <span aria-hidden="true">→</span></a>
               </div>
             </div>
           </article>
           <article class="house-card reveal">
-            <button type="button" class="house-photo-btn" data-gallery="casa-4" aria-label="Ver as 29 fotos da Casa 4">
-              <img class="house-photo" src="assets/img/casa-4/thumb/01.jpg" alt="Sala da Casa 4 com vista para a piscina" loading="lazy" width="640" height="480">
-              <span class="photo-count"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m21 16-5-5-8 8"/></svg>29 fotos</span>
-            </button>
+            <div class="house-media">
+              <div class="house-track carousel-track" data-carousel data-house-slides="casa-4" data-cover="01.jpg" tabindex="0" role="region" aria-roledescription="carrossel" aria-label="Fotos da Casa 4. Deslize para ver mais.">
+                <img class="house-photo" src="assets/img/casa-4/thumb/01.jpg" alt="Casa 4: foto 1 de 29" width="640" height="480" draggable="false">
+              </div>
+              <button type="button" class="car-btn car-prev" data-carousel-prev aria-label="Foto anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+              <button type="button" class="car-btn car-next" data-carousel-next aria-label="Próxima foto"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+              <span class="photo-count" data-carousel-count aria-live="polite">1 / 29</span>
+            </div>
             <div class="house-body">
               <div class="house-top"><h3>Casa 4</h3><span class="tag">até 12 pessoas</span></div>
               <ul class="house-specs"><li>4 suítes</li><li>Piscina privativa</li><li>3 vagas</li></ul>
               <div class="house-actions">
-                <button type="button" class="house-link" data-gallery="casa-4">Ver fotos</button>
+                <button type="button" class="house-link" data-gallery="casa-4">Tela cheia</button>
                 <a href="#reservar" class="house-link house-link-strong" data-house="Casa 4">Consultar datas <span aria-hidden="true">→</span></a>
               </div>
             </div>

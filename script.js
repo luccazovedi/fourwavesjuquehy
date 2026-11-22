@@ -42,28 +42,68 @@
     items.forEach((el) => el.classList.add('is-visible'));
   }
 
-  // Carrossel deslizável (toque nativo + arrastar com o mouse)
+  // Fotos das casas dentro dos cards (carregadas sob demanda)
+  const galleries = window.GALLERIES || {};
+  document.querySelectorAll('[data-house-slides]').forEach((track) => {
+    const key = track.dataset.houseSlides;
+    const photos = galleries[key];
+    if (!photos) return;
+    const name = key.replace('casa-', 'Casa ');
+    const cover = track.dataset.cover;
+    // a foto de capa vem primeiro, as demais seguem a ordem da galeria
+    const ordered = [...photos.filter(([f]) => f === cover), ...photos.filter(([f]) => f !== cover)];
+    track.dataset.order = JSON.stringify(ordered.map(([f]) => photos.findIndex(([g]) => g === f)));
+    track.innerHTML = ordered.map(([file], i) =>
+      `<img class="house-photo" src="assets/img/${key}/thumb/${file}" alt="${name}: foto ${i + 1} de ${ordered.length}" width="640" height="480" draggable="false"${i ? ' loading="lazy" decoding="async"' : ''}>`
+    ).join('');
+  });
+
+  // Carrossel deslizável (toque nativo + arrastar com o mouse + setas)
   document.querySelectorAll('[data-carousel]').forEach((track) => {
     const slides = [...track.children];
-    const dotsWrap = track.parentElement.querySelector('[data-carousel-dots]');
+    const root = track.parentElement;
+    const dotsWrap = root.querySelector('[data-carousel-dots]');
+    const count = root.querySelector('[data-carousel-count]');
+    const prev = root.querySelector('[data-carousel-prev]');
+    const next = root.querySelector('[data-carousel-next]');
     if (dotsWrap) dotsWrap.innerHTML = slides.map(() => '<span></span>').join('');
     const dots = dotsWrap ? [...dotsWrap.children] : [];
-    const update = () => {
-      const pad = parseFloat(getComputedStyle(track).paddingLeft) || 0;
-      let active = 0, best = Infinity;
-      slides.forEach((s, i) => {
-        const d = Math.abs(s.offsetLeft - pad - track.scrollLeft);
-        if (d < best) { best = d; active = i; }
-      });
-      if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 4) active = slides.length - 1;
-      dots.forEach((d, i) => d.classList.toggle('is-active', i === active));
+    const pad = () => parseFloat(getComputedStyle(track).paddingLeft) || 0;
+    const posOf = (i) => slides[i].offsetLeft - pad();
+    const nearest = (x) => slides.reduce((best, _, i) => Math.abs(posOf(i) - x) < Math.abs(posOf(best) - x) ? i : best, 0);
+    const goTo = (i) => {
+      i = Math.max(0, Math.min(slides.length - 1, i));
+      track.scrollTo({ left: posOf(i), behavior: 'smooth' });
     };
-    track.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
+
+    const update = () => {
+      let active = nearest(track.scrollLeft);
+      if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 4) active = slides.length - 1;
+      track.dataset.index = active;
+      dots.forEach((d, i) => d.classList.toggle('is-active', i === active));
+      if (count) count.textContent = `${active + 1} / ${slides.length}`;
+      if (prev) prev.disabled = active === 0;
+      if (next) next.disabled = active === slides.length - 1;
+    };
+    let ticking = false;
+    track.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => { update(); ticking = false; });
+    }, { passive: true });
     update();
+
+    prev?.addEventListener('click', () => goTo(+track.dataset.index - 1));
+    next?.addEventListener('click', () => goTo(+track.dataset.index + 1));
+    track.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault();
+      goTo(+track.dataset.index + (e.key === 'ArrowRight' ? 1 : -1));
+    });
 
     let startX = 0, startScroll = 0, down = false, moved = false;
     track.addEventListener('pointerdown', (e) => {
-      if (e.pointerType !== 'mouse' || track.scrollWidth <= track.clientWidth) return;
+      if (e.pointerType !== 'mouse' || e.button !== 0 || track.scrollWidth <= track.clientWidth) return;
       down = true; moved = false; startX = e.clientX; startScroll = track.scrollLeft;
     });
     window.addEventListener('pointermove', (e) => {
@@ -78,17 +118,9 @@
       if (!moved) return;
       track.classList.remove('is-dragging');
       // avança ou volta um slide conforme a direção do arraste
-      const pad = parseFloat(getComputedStyle(track).paddingLeft) || 0;
-      const from = slides.reduce((best, sl, i) =>
-        Math.abs(sl.offsetLeft - pad - startScroll) < Math.abs(slides[best].offsetLeft - pad - startScroll) ? i : best, 0);
-      const dir = track.scrollLeft > startScroll ? 1 : -1;
-      const to = Math.max(0, Math.min(slides.length - 1, from + (Math.abs(track.scrollLeft - startScroll) > 40 ? dir : 0)));
-      track.scrollTo({ left: slides[to].offsetLeft - pad, behavior: 'smooth' });
-    });
-    track.addEventListener('keydown', (e) => {
-      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-      e.preventDefault();
-      track.scrollBy({ left: (e.key === 'ArrowRight' ? 1 : -1) * slides[0].offsetWidth, behavior: 'smooth' });
+      const from = nearest(startScroll);
+      const delta = track.scrollLeft - startScroll;
+      goTo(from + (Math.abs(delta) > 40 ? Math.sign(delta) : 0));
     });
   });
 
@@ -154,7 +186,6 @@
   const lbTitle = lb.querySelector('[data-lb-title]');
   const lbCount = lb.querySelector('[data-lb-count]');
   const lbThumbs = lb.querySelector('[data-lb-thumbs]');
-  const galleries = window.GALLERIES || {};
   let current = null, index = 0, lastFocus = null;
 
   const show = (i) => {
@@ -177,7 +208,7 @@
     });
   };
 
-  const openGallery = (key) => {
+  const openGallery = (key, start = 0) => {
     if (!galleries[key]) return;
     current = key;
     lastFocus = document.activeElement;
@@ -186,7 +217,7 @@
       `<button type="button" aria-label="Foto ${n + 1}"><img src="assets/img/${key}/thumb/${file}" alt=""></button>`).join('');
     lb.hidden = false;
     document.body.classList.add('lb-open');
-    show(0);
+    show(start);
     lb.querySelector('[data-lb-close]').focus();
   };
 
@@ -198,7 +229,12 @@
   };
 
   document.querySelectorAll('[data-gallery]').forEach((el) =>
-    el.addEventListener('click', () => openGallery(el.dataset.gallery)));
+    el.addEventListener('click', () => {
+      // abre na mesma foto que está visível no card
+      const track = el.closest('.house-card')?.querySelector('[data-house-slides]');
+      const order = track ? JSON.parse(track.dataset.order || '[]') : [];
+      openGallery(el.dataset.gallery, order[+track?.dataset.index || 0] || 0);
+    }));
   lb.querySelector('[data-lb-close]').addEventListener('click', closeGallery);
   lb.querySelector('[data-lb-prev]').addEventListener('click', () => show(index - 1));
   lb.querySelector('[data-lb-next]').addEventListener('click', () => show(index + 1));
