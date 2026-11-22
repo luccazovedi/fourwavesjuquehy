@@ -7,7 +7,8 @@ Site estático (HTML, CSS e JS puros), sem etapa de build.
 - `index.html`: conteúdo
 - `styles.css`: visual
 - `script.js`: menu mobile, animações e formulário de reserva (abre o WhatsApp com a mensagem pronta)
-- `assets/img/`: fotos (veja `assets/img/LEIA-ME.md`)
+- `assets/img/`: fotos (capa, seções e uma pasta por casa, com miniaturas em `thumb/`)
+- `gallery-data.js`: lista das fotos de cada casa usada na galeria
 
 ## Rodar localmente
 

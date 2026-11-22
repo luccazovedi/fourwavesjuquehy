@@ -9,11 +9,12 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Four Waves Juquehy">
   <meta property="og:description" content="Casas com 4 suítes e piscina privativa a 5 minutos a pé da praia de Juquehy.">
-  <meta property="og:image" content="assets/img/hero.jpg">
+  <meta property="og:image" content="https://www.fourwaves.com.br/assets/img/hero.jpg">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="assets/img/hero.jpg">
   <link rel="stylesheet" href="styles.css">
   <script type="application/ld+json">
   {
@@ -43,13 +44,17 @@
         <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M7 17c3-3 6-3 9 0s6 3 9 0 6-3 8 0M7 22c3-3 6-3 9 0s6 3 9 0 6-3 8 0M7 27c3-3 6-3 9 0s6 3 9 0 6-3 8 0M10 12c2.5-2 5-2 7.5 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
         <span class="brand-text"><strong>Four Waves</strong><small>Juquehy</small></span>
       </a>
-      <nav class="nav" data-nav aria-label="Principal">
+      <nav class="nav" id="menu" data-nav aria-label="Principal">
         <a href="#casas">As casas</a>
         <a href="#comodidades">Comodidades</a>
         <a href="#localizacao">Localização</a>
         <a href="#depoimentos">Hóspedes</a>
         <a href="#duvidas">Dúvidas</a>
         <a href="#reservar" class="btn btn-sm btn-primary nav-cta">Reservar</a>
+        <div class="nav-contact">
+          <a href="https://wa.me/5511998097766" target="_blank" rel="noopener">WhatsApp +55 (11) 99809-7766</a>
+          <a href="mailto:info@fourwaves.com.br">info@fourwaves.com.br</a>
+        </div>
       </nav>
       <button class="menu-toggle" data-menu-toggle aria-expanded="false" aria-controls="menu" aria-label="Abrir menu">
         <span></span><span></span>
@@ -100,7 +105,7 @@
         </div>
         <div class="about-media reveal">
           <div class="photo photo-tall" style="--img:url('assets/img/area-externa.jpg')" role="img" aria-label="Área externa com piscina e churrasqueira"></div>
-          <div class="photo photo-small" style="--img:url('assets/img/praia.jpg')" role="img" aria-label="Praia de Juquehy"></div>
+          <div class="photo photo-small" style="--img:url('assets/img/rua.jpg')" role="img" aria-label="Rua arborizada do condomínio"></div>
           <div class="badge-float">
             <strong>5 min</strong>
             <span>a pé até a praia</span>
@@ -114,57 +119,67 @@
       <div class="container">
         <div class="section-head reveal">
           <p class="eyebrow">Nossas casas</p>
-          <h2>Quatro casas, o mesmo cuidado.</h2>
+          <h2>Três casas, o mesmo cuidado.</h2>
           <p>Todas seguem o mesmo padrão: 4 suítes, sala integrada, cozinha equipada e área externa com piscina e churrasqueira só para o seu grupo.</p>
         </div>
         <div class="house-grid">
           <article class="house-card reveal">
-            <div class="photo house-photo" style="--img:url('assets/img/casa-1.jpg')" role="img" aria-label="Casa 1"></div>
-            <div class="house-body">
-              <div class="house-top"><h3>Casa 1</h3><span class="tag">até 12 pessoas</span></div>
-              <ul class="house-specs"><li>4 suítes</li><li>Piscina privativa</li><li>3 vagas</li></ul>
-              <a href="#reservar" class="house-link" data-house="Casa 1">Consultar datas <span aria-hidden="true">→</span></a>
-            </div>
-          </article>
-          <article class="house-card reveal">
-            <div class="photo house-photo" style="--img:url('assets/img/casa-2.jpg')" role="img" aria-label="Casa 2"></div>
+            <button type="button" class="house-photo-btn" data-gallery="casa-2" aria-label="Ver as 28 fotos da Casa 2">
+              <img class="house-photo" src="assets/img/casa-2/thumb/02.jpg" alt="Sala da Casa 2 com vista para a piscina" loading="lazy" width="640" height="480">
+              <span class="photo-count"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m21 16-5-5-8 8"/></svg>28 fotos</span>
+            </button>
             <div class="house-body">
               <div class="house-top"><h3>Casa 2</h3><span class="tag">até 12 pessoas</span></div>
               <ul class="house-specs"><li>4 suítes</li><li>Piscina privativa</li><li>3 vagas</li></ul>
-              <a href="#reservar" class="house-link" data-house="Casa 2">Consultar datas <span aria-hidden="true">→</span></a>
+              <div class="house-actions">
+                <button type="button" class="house-link" data-gallery="casa-2">Ver fotos</button>
+                <a href="#reservar" class="house-link house-link-strong" data-house="Casa 2">Consultar datas <span aria-hidden="true">→</span></a>
+              </div>
             </div>
           </article>
           <article class="house-card reveal">
-            <div class="photo house-photo" style="--img:url('assets/img/casa-3.jpg')" role="img" aria-label="Casa 3"></div>
+            <button type="button" class="house-photo-btn" data-gallery="casa-3" aria-label="Ver as 29 fotos da Casa 3">
+              <img class="house-photo" src="assets/img/casa-3/thumb/01.jpg" alt="Sala da Casa 3 com vista para a piscina" loading="lazy" width="640" height="480">
+              <span class="photo-count"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m21 16-5-5-8 8"/></svg>29 fotos</span>
+            </button>
             <div class="house-body">
               <div class="house-top"><h3>Casa 3</h3><span class="tag">até 12 pessoas</span></div>
               <ul class="house-specs"><li>4 suítes</li><li>Piscina privativa</li><li>3 vagas</li></ul>
-              <a href="#reservar" class="house-link" data-house="Casa 3">Consultar datas <span aria-hidden="true">→</span></a>
+              <div class="house-actions">
+                <button type="button" class="house-link" data-gallery="casa-3">Ver fotos</button>
+                <a href="#reservar" class="house-link house-link-strong" data-house="Casa 3">Consultar datas <span aria-hidden="true">→</span></a>
+              </div>
             </div>
           </article>
           <article class="house-card reveal">
-            <div class="photo house-photo" style="--img:url('assets/img/casa-4.jpg')" role="img" aria-label="Casa 4"></div>
+            <button type="button" class="house-photo-btn" data-gallery="casa-4" aria-label="Ver as 29 fotos da Casa 4">
+              <img class="house-photo" src="assets/img/casa-4/thumb/01.jpg" alt="Sala da Casa 4 com vista para a piscina" loading="lazy" width="640" height="480">
+              <span class="photo-count"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m21 16-5-5-8 8"/></svg>29 fotos</span>
+            </button>
             <div class="house-body">
               <div class="house-top"><h3>Casa 4</h3><span class="tag">até 12 pessoas</span></div>
               <ul class="house-specs"><li>4 suítes</li><li>Piscina privativa</li><li>3 vagas</li></ul>
-              <a href="#reservar" class="house-link" data-house="Casa 4">Consultar datas <span aria-hidden="true">→</span></a>
+              <div class="house-actions">
+                <button type="button" class="house-link" data-gallery="casa-4">Ver fotos</button>
+                <a href="#reservar" class="house-link house-link-strong" data-house="Casa 4">Consultar datas <span aria-hidden="true">→</span></a>
+              </div>
             </div>
           </article>
         </div>
 
-        <div class="rooms reveal">
-          <div class="room">
-            <h3>Suítes</h3>
-            <p>Quatro suítes amplas, todas com ar condicionado e ventilador. Acomodam 10 adultos com conforto e até 12 pessoas.</p>
-          </div>
-          <div class="room">
-            <h3>Sala e cozinha</h3>
-            <p>Sala com dois ambientes, estar e jantar, com ar condicionado e ventilador de teto. Cozinha completa e equipada.</p>
-          </div>
-          <div class="room">
-            <h3>Área externa</h3>
-            <p>Churrasqueira integrada à piscina privativa: o ponto de encontro da casa, do café da manhã ao fim da tarde.</p>
-          </div>
+        <div class="rooms">
+          <figure class="room reveal">
+            <img src="assets/img/suite.jpg" alt="Suíte com cama de casal e varanda" loading="lazy" width="1400" height="1066">
+            <figcaption><h3>Suítes</h3><p>Quatro suítes amplas, todas com ar condicionado e ventilador. Acomodam 10 adultos com conforto e até 12 pessoas.</p></figcaption>
+          </figure>
+          <figure class="room reveal">
+            <img src="assets/img/sala.jpg" alt="Sala de jantar integrada à cozinha" loading="lazy" width="1400" height="1050">
+            <figcaption><h3>Sala e cozinha</h3><p>Sala com dois ambientes, estar e jantar, com ar condicionado e ventilador de teto. Cozinha completa e equipada.</p></figcaption>
+          </figure>
+          <figure class="room reveal">
+            <img src="assets/img/piscina.jpg" alt="Piscina privativa cercada de plantas" loading="lazy" width="1400" height="1050">
+            <figcaption><h3>Área externa</h3><p>Churrasqueira integrada à piscina privativa: o ponto de encontro da casa, do café da manhã ao fim da tarde.</p></figcaption>
+          </figure>
         </div>
       </div>
     </section>
@@ -295,13 +310,13 @@
             <div class="field">
               <label for="f-hospedes">Hóspedes</label>
               <select id="f-hospedes" name="hospedes">
-                <option>até 4</option><option>5 a 8</option><option selected>9 a 10</option><option>11 a 12</option><option>mais de 12 (2 casas)</option>
+                <option>até 4</option><option>5 a 8</option><option selected>9 a 10</option><option>11 a 12</option><option>mais de 12 (2 ou mais casas)</option>
               </select>
             </div>
             <div class="field">
               <label for="f-casa">Casa</label>
               <select id="f-casa" name="casa">
-                <option>Qualquer disponível</option><option>Casa 1</option><option>Casa 2</option><option>Casa 3</option><option>Casa 4</option>
+                <option>Qualquer disponível</option><option>Casa 2</option><option>Casa 3</option><option>Casa 4</option>
               </select>
             </div>
           </div>
@@ -385,6 +400,21 @@
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.8 7L4 20l1-4.1A8 8 0 1 1 20 12z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8a4 4 0 0 1-1.8-1.8l.8-1-1-2z"/></svg>
   </a>
 
+  <div class="lightbox" data-lightbox role="dialog" aria-modal="true" aria-label="Galeria de fotos" hidden>
+    <div class="lb-top">
+      <span class="lb-title" data-lb-title></span>
+      <span class="lb-count" data-lb-count></span>
+      <button type="button" class="lb-btn lb-close" data-lb-close aria-label="Fechar galeria"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <div class="lb-stage" data-lb-stage>
+      <button type="button" class="lb-btn lb-prev" data-lb-prev aria-label="Foto anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <img class="lb-img" data-lb-img alt="">
+      <button type="button" class="lb-btn lb-next" data-lb-next aria-label="Próxima foto"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+    <div class="lb-thumbs" data-lb-thumbs></div>
+  </div>
+
+  <script src="gallery-data.js" defer></script>
   <script src="script.js" defer></script>
 </body>
 </html>
