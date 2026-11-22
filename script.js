@@ -42,6 +42,56 @@
     items.forEach((el) => el.classList.add('is-visible'));
   }
 
+  // Carrossel deslizável (toque nativo + arrastar com o mouse)
+  document.querySelectorAll('[data-carousel]').forEach((track) => {
+    const slides = [...track.children];
+    const dotsWrap = track.parentElement.querySelector('[data-carousel-dots]');
+    if (dotsWrap) dotsWrap.innerHTML = slides.map(() => '<span></span>').join('');
+    const dots = dotsWrap ? [...dotsWrap.children] : [];
+    const update = () => {
+      const pad = parseFloat(getComputedStyle(track).paddingLeft) || 0;
+      let active = 0, best = Infinity;
+      slides.forEach((s, i) => {
+        const d = Math.abs(s.offsetLeft - pad - track.scrollLeft);
+        if (d < best) { best = d; active = i; }
+      });
+      if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 4) active = slides.length - 1;
+      dots.forEach((d, i) => d.classList.toggle('is-active', i === active));
+    };
+    track.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
+    update();
+
+    let startX = 0, startScroll = 0, down = false, moved = false;
+    track.addEventListener('pointerdown', (e) => {
+      if (e.pointerType !== 'mouse' || track.scrollWidth <= track.clientWidth) return;
+      down = true; moved = false; startX = e.clientX; startScroll = track.scrollLeft;
+    });
+    window.addEventListener('pointermove', (e) => {
+      if (!down) return;
+      const dx = e.clientX - startX;
+      if (!moved && Math.abs(dx) > 4) { moved = true; track.classList.add('is-dragging'); }
+      if (moved) track.scrollLeft = startScroll - dx;
+    });
+    window.addEventListener('pointerup', () => {
+      if (!down) return;
+      down = false;
+      if (!moved) return;
+      track.classList.remove('is-dragging');
+      // avança ou volta um slide conforme a direção do arraste
+      const pad = parseFloat(getComputedStyle(track).paddingLeft) || 0;
+      const from = slides.reduce((best, sl, i) =>
+        Math.abs(sl.offsetLeft - pad - startScroll) < Math.abs(slides[best].offsetLeft - pad - startScroll) ? i : best, 0);
+      const dir = track.scrollLeft > startScroll ? 1 : -1;
+      const to = Math.max(0, Math.min(slides.length - 1, from + (Math.abs(track.scrollLeft - startScroll) > 40 ? dir : 0)));
+      track.scrollTo({ left: slides[to].offsetLeft - pad, behavior: 'smooth' });
+    });
+    track.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault();
+      track.scrollBy({ left: (e.key === 'ArrowRight' ? 1 : -1) * slides[0].offsetWidth, behavior: 'smooth' });
+    });
+  });
+
   // Booking form
   const form = document.querySelector('[data-booking-form]');
   const err = form.querySelector('[data-form-error]');

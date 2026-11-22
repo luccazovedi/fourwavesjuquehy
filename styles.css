@@ -124,9 +124,13 @@ p { margin: 0 0 1em; }
 .checks { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 12px; }
 .checks li { padding-left: 34px; position: relative; }
 .checks li::before { content: ""; position: absolute; left: 0; top: 4px; width: 22px; height: 22px; border-radius: 50%; background: var(--sea-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231f7a8c' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12l4 4 8-8'/%3E%3C/svg%3E") center / 14px no-repeat; }
-.about-media { position: relative; display: grid; grid-template-columns: 1fr .6fr; gap: 16px; align-items: end; }
-.photo-tall { aspect-ratio: 4 / 5; }
-.photo-small { aspect-ratio: 3 / 4; margin-bottom: 48px; }
+.about-media { position: relative; }
+.about-track { position: relative; display: grid; grid-template-columns: 1fr .6fr; gap: 16px; align-items: end; }
+.slide { position: relative; }
+.slide .photo { width: 100%; }
+.slide-main .photo { aspect-ratio: 4 / 5; }
+.slide-side .photo { aspect-ratio: 3 / 4; margin-bottom: 48px; }
+.slide-extra, .carousel-dots { display: none; }
 .badge-float { position: absolute; left: -24px; bottom: 32px; background: var(--ocean); color: #fff; padding: 18px 22px; border-radius: 14px; box-shadow: var(--shadow); display: flex; flex-direction: column; }
 .badge-float strong { font-family: var(--font-display); font-size: 1.8rem; font-weight: 500; line-height: 1; }
 .badge-float span { font-size: .85rem; opacity: .8; }
@@ -302,6 +306,20 @@ body.lb-open { overflow: hidden; }
 
   .about-grid, .location-grid, .booking-grid, .faq-inner { grid-template-columns: 1fr; }
   .badge-float { left: 12px; bottom: 12px; }
+  /* Carrossel deslizável no celular */
+  .about-track {
+    display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
+    margin-inline: -16px; padding-inline: 16px; scroll-padding-inline: 16px;
+    overscroll-behavior-x: contain; scrollbar-width: none; cursor: grab; touch-action: pan-x pan-y;
+  }
+  .about-track::-webkit-scrollbar { display: none; }
+  .about-track.is-dragging { cursor: grabbing; scroll-snap-type: none; scroll-behavior: auto; }
+  .about-track.is-dragging * { pointer-events: none; }
+  .slide, .slide-extra { display: block; flex: 0 0 84%; scroll-snap-align: start; }
+  .slide .photo, .slide-main .photo, .slide-side .photo { aspect-ratio: 4 / 5; margin: 0; user-select: none; }
+  .carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 18px; }
+  .carousel-dots span { width: 8px; height: 8px; border-radius: 999px; background: var(--line); transition: width .25s, background .25s; }
+  .carousel-dots span.is-active { width: 24px; background: var(--sea); }
   .rooms { grid-template-columns: 1fr; gap: 36px; }
   .house-grid { grid-template-columns: repeat(2, 1fr); }
   .quote-grid { grid-template-columns: 1fr; }
